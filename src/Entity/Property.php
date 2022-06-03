@@ -3,13 +3,22 @@
 namespace App\Entity;
 
 use App\Repository\PropertyRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Cocur\Slugify\Slugify;
+use Doctrine\ORM\Query\Expr\Func;
 
 /**
  * @ORM\Entity(repositoryClass=PropertyRepository::class)
  */
 class Property
 {
+    const HEAT = [
+        0 => 'Electrique',
+        1 => 'Gaz',
+        2 => 'Bois'
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -65,12 +74,22 @@ class Property
     /**
      * @ORM\Column(type="boolean", options={"default" : false})
      */
-    private $sold;
+    private $sold = false;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      */
     private $created_at;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $postal_code;
+
+    public function __construct()
+    {
+        $this->created_at = new \DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -87,6 +106,11 @@ class Property
         $this->title = $title;
 
         return $this;
+    }
+
+    public function getSlug(): string
+    {
+        return (new Slugify())->slugify($this->title);
     }
 
     public function getDescription(): ?string
@@ -149,6 +173,11 @@ class Property
         return $this;
     }
 
+    public function getFormattedPrice(): string
+    {
+        return number_format($this->price, 0, '', ' ');
+    }
+
     public function getHeat(): ?int
     {
         return $this->heat;
@@ -159,6 +188,11 @@ class Property
         $this->heat = $heat;
 
         return $this;
+    }
+
+    public function getHeatType(): string
+    {
+        return self::HEAT[$this->heat];
     }
 
     public function getCity(): ?string
@@ -197,14 +231,26 @@ class Property
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): \DateTime
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTime $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getPostalCode(): ?int
+    {
+        return $this->postal_code;
+    }
+
+    public function setPostalCode(int $postal_code): self
+    {
+        $this->postal_code = $postal_code;
 
         return $this;
     }

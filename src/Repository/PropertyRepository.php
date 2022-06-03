@@ -6,6 +6,7 @@ use App\Entity\Property;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,6 +48,26 @@ class PropertyRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return Property[] Returns an array of the last 4 propereties published
+     */
+    public function findLatest()
+    {
+        return $this->findVisibleQuery()
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Select properties that have not been sold
+     */
+    private function findVisibleQuery(): QueryBuilder
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.sold = false');
+    }
+
     // /**
     //  * @return Property[] Returns an array of Property objects
     //  */
@@ -65,11 +86,13 @@ class PropertyRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Property
+    public function findOneBySomeField($value, $limit, $offset): ?Property
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')
             ->setParameter('val', $value)
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
             ->getQuery()
             ->getOneOrNullResult()
         ;
