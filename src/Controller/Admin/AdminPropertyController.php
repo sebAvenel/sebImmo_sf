@@ -44,7 +44,7 @@ class AdminPropertyController extends AbstractController
     }
 
     /**
-     * @Route("/admin/property/create", name="admin.property.create")
+     * @Route("/admin/property/create", name="admin.property.new")
      * @return Response
      */
     public function new(Request $request): Response
@@ -63,7 +63,7 @@ class AdminPropertyController extends AbstractController
     }
 
     /**
-     * @Route("/admin/property/edit/{id}", name="admin.property.edit")
+     * @Route("/admin/property/edit/{id}", name="admin.property.edit", methods="GET|POST")
      * @return Response
      */
     public function edit(Property $property, Request $request): Response
@@ -78,5 +78,19 @@ class AdminPropertyController extends AbstractController
             'property' => $property,
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/admin/property/{id}", name="admin.property.delete", methods="DELETE")
+     * @return Response
+     */
+    public function delete(Property $property, Request $request): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $property->getId(), $request->get('_token'))) {
+            $this->em->remove($property);
+            $this->em->flush();
+            return $this->redirectToRoute('admin.property.index');
+        }
+        return $this->redirectToRoute('admin.property.index');
     }
 }

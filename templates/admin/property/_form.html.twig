@@ -16,5 +16,5 @@
 <div class="row mt-4">
 	<div class="col-12">{{ form_row(form.description) }}</div>
 </div>
-<button class="btn btn-primary mt-4">Editer</button>
+<button class="btn btn-primary mt-4">{{ button|default('Enregistrer')}}</button>
 {{form_end(form)}}
