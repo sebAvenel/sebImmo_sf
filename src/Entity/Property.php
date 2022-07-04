@@ -7,9 +7,12 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Query\Expr\Func;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=PropertyRepository::class)
+ * @UniqueEntity("title")
  */
 class Property
 {
@@ -28,6 +31,12 @@ class Property
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 255,
+     *      minMessage = "{{ limit }} charactères minimum",
+     *      maxMessage = "{{ limit }} charactères maximum"
+     * )
      */
     private $title;
 
@@ -38,6 +47,11 @@ class Property
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(
+     *    min = 10,
+     *    max = 400,
+     *    notInRangeMessage = "Vous devez entrer un nombre entre {{ min }}m² et {{ max }}m² ",
+     * )
      */
     private $surface;
 
@@ -83,6 +97,7 @@ class Property
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Regex("/^(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}$/")
      */
     private $postal_code;
 
