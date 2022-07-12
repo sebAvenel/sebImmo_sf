@@ -12,5 +12,11 @@
 				<button class="btn btn-primary btn-lg" type="button">Example button</button>
 			</div>
 		</div>
+		<h2>Tous nos biens</h2>
+		<div class="row flex">
+			{% for property in properties %}
+				{% include "property/_propertyCards.html.twig" %}
+			{% endfor %}
+		</div>
 	</div>
 {% endblock %}

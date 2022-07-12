@@ -1,0 +1,17 @@
+<div class="col-3">
+	<div class="card mt-4">
+		<img class="card-img-top" src="http://place-hold.it/350x250" alt="Card image cap">
+		<div class="card-body">
+			<h6 class="card-title text-primary">
+				<a href="{{ path('property.show', {id: property.id, slug: property.slug}) }}">{{ property.title }}</a>
+			</h6>
+			<h6>Ville:
+				{{property.city}}
+				({{property.postalCode}})</h6>
+			<p class="card-text">{{ property.description|u.truncate(80, '...', false) }}</p>
+			<h5 class='text-primary'>Prix:
+				{{property.formattedPrice}}
+				€</h5>
+		</div>
+	</div>
+</div>

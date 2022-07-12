@@ -26,7 +26,6 @@ class PropertyController extends AbstractController
     public function index(): Response
     {
         $properties = $this->repository->findBy(['sold' => false]);
-        dump($properties);
         return $this->render('property/index.html.twig', [
             'controller_name' => 'PropertyController',
             'current_menu' => 'properties',
