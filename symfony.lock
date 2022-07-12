@@ -100,6 +100,9 @@
     "egulias/email-validator": {
         "version": "3.1.2"
     },
+    "fakerphp/faker": {
+        "version": "v1.19.0"
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.12"
     },
@@ -445,6 +448,9 @@
             "./tests/bootstrap.php"
         ]
     },
+    "symfony/polyfill-intl-grapheme": {
+        "version": "v1.26.0"
+    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.25.0"
     },
@@ -528,6 +534,9 @@
     "symfony/stopwatch": {
         "version": "v4.4.38"
     },
+    "symfony/string": {
+        "version": "v5.4.10"
+    },
     "symfony/translation": {
         "version": "4.4",
         "recipe": {
@@ -604,6 +613,9 @@
         "version": "1.2.1"
     },
     "twig/extra-bundle": {
+        "version": "v3.4.0"
+    },
+    "twig/string-extra": {
         "version": "v3.4.0"
     },
     "twig/twig": {
