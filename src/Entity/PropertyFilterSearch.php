@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 
-class PropertySearch
+class PropertyFilterSearch
 {
     /**
      * @var int|null
