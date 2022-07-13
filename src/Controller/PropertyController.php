@@ -4,11 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Property;
 use App\Repository\PropertyRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\BrowserKit\Response as BrowserKitResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Flex\Response as FlexResponse;
 
 class PropertyController extends AbstractController
 {
@@ -23,9 +23,18 @@ class PropertyController extends AbstractController
      * @Route("/biens", name="app_property")
      * @return Response
      */
-    public function index(): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
-        $properties = $this->repository->findBy(['sold' => false]);
+        $datas = $this->repository->findBy(['sold' => false]);
+        $properties = $paginator->paginate(
+            $datas,
+            $request->query->getInt('page', 1),
+            8
+        );
+        $properties->setCustomParameters([
+            'align' => 'center'
+        ]);
+
         return $this->render('property/index.html.twig', [
             'controller_name' => 'PropertyController',
             'current_menu' => 'properties',

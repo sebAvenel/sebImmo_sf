@@ -18,5 +18,8 @@
 				{% include "property/_propertyCards.html.twig" %}
 			{% endfor %}
 		</div>
+		<div class="mt-4">
+			{{ knp_pagination_render(properties) }}
+		</div>
 	</div>
 {% endblock %}
