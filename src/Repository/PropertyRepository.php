@@ -69,6 +69,19 @@ class PropertyRepository extends ServiceEntityRepository
             ->where('p.sold = false');
     }
 
+    /**
+     * Return list of properties by filtering
+     *
+     * @return Property[]
+     */
+    public function findBySearch()
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.sold = false')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Property[] Returns an array of Property objects
     //  */

@@ -1,3 +1,7 @@
 .badge-danger {
     background-color: red;
 }
+
+.form-control {
+    margin-bottom: 2%;
+}

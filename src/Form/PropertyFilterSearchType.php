@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\PropertyFilterSearch;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,7 +18,7 @@ class PropertyFilterSearchType extends AbstractType
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'Prix maximum'
+                    'placeholder' => 'Prix maximum',
                 ]
             ])
             ->add('minSurface', IntegerType::class, [
@@ -33,6 +34,8 @@ class PropertyFilterSearchType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => PropertyFilterSearch::class,
+            'method' => 'get',
+            'csrf_protection' => false
         ]);
     }
 }
