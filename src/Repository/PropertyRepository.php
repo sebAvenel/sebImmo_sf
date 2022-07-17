@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Property;
+use App\Entity\PropertyFilterSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -66,7 +67,7 @@ class PropertyRepository extends ServiceEntityRepository
     private function findVisibleQuery(): QueryBuilder
     {
         return $this->createQueryBuilder('p')
-            ->where('p.sold = false');
+            ->andWhere('p.sold = false');
     }
 
     /**
@@ -74,10 +75,20 @@ class PropertyRepository extends ServiceEntityRepository
      *
      * @return Property[]
      */
-    public function findBySearch()
+    public function findBySearch(PropertyFilterSearch $search)
     {
-        return $this->createQueryBuilder('p')
-            ->where('p.sold = false')
+        $query = $this->findVisibleQuery();
+
+        if ($search->getMaxValue()) {
+            $query = $query->andWhere('p.price <= :maxprice');
+            $query->setParameter('maxprice', $search->getMaxValue());
+        }
+        if ($search->getMinSurface()) {
+            $query = $query->andWhere('p.surface >= :minsurface');
+            $query->setParameter('minsurface', $search->getMinSurface());
+        }
+
+        return $query
             ->getQuery()
             ->getResult();
     }
