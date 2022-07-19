@@ -79,18 +79,56 @@ class PropertyRepository extends ServiceEntityRepository
     {
         $query = $this->findVisibleQuery();
 
-        if ($search->getMaxValue()) {
-            $query = $query->andWhere('p.price <= :maxprice');
-            $query->setParameter('maxprice', $search->getMaxValue());
-        }
         if ($search->getMinSurface()) {
             $query = $query->andWhere('p.surface >= :minsurface');
             $query->setParameter('minsurface', $search->getMinSurface());
         }
+        if ($search->getMaxSurface()) {
+            $query = $query->andWhere('p.surface <= :minsurface');
+            $query->setParameter('maxsurface', $search->getMaxSurface());
+        }
+        if ($search->getMinValue()) {
+            $query = $query->andWhere('p.price >= :minprice');
+            $query->setParameter('minprice', $search->getMinValue());
+        }
+        if ($search->getMaxValue()) {
+            $query = $query->andWhere('p.price <= :maxprice');
+            $query->setParameter('maxprice', $search->getMaxValue());
+        }
+        if ($search->getRooms()) {
+            $query = $query->andWhere('p.rooms >= :minrooms');
+            $query->setParameter('minrooms', $search->getRooms());
+        }
+        if ($search->getBedRooms()) {
+            $query = $query->andWhere('p.bedrooms >= :minbedrooms');
+            $query->setParameter('minbedrooms', $search->getBedRooms());
+        }
+        if ($search->getHeat()) {
+            $query = $query->andWhere('p.heat >= :heat');
+            $query->setParameter('heat', (int) $search->getHeat());
+        }
+        if ($search->getCity()) {
+            $query = $query->andWhere('p.city LIKE :city');
+            $query->setParameter('city', '%' . $search->getCity() . '%');
+        }
+
 
         return $query
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * returns the highest property price
+     *
+     * @return int
+     */
+    public function findMaxPrice()
+    {
+        return $this->findVisibleQuery()
+            ->select('MAX(p.price)')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     // /**
