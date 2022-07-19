@@ -47,8 +47,12 @@
 				{{ form_end(form) }}
 			</div>
 		</div>
-		<h2>Tous nos biens</h2>
 		<div class="row flex">
+			{% for message in app.flashes('error') %}
+				<div class="alert alert-danger">
+					{{ message }}
+				</div>
+			{% endfor %}
 			{% for property in properties %}
 				{% include "property/_propertyCards.html.twig" %}
 			{% endfor %}

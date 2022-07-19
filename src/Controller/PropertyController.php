@@ -31,6 +31,9 @@ class PropertyController extends AbstractController
         $form = $this->createForm(PropertyFilterSearchType::class, $search);
         $form->handleRequest($request);
         $datas = $this->repository->findBySearch($search);
+        if (empty($datas)) {
+            $this->addFlash('error', 'Aucun bien trouvé');
+        }
         $properties = $paginator->paginate(
             $datas,
             $request->query->getInt('page', 1),
