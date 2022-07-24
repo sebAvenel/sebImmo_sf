@@ -2,14 +2,16 @@
 
 namespace App\Form;
 
+use App\Entity\Option;
 use App\Entity\Property;
 use App\Entity\PropertyFilterSearch;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType as TypeTextType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PropertyFilterSearchType extends AbstractType
 {
@@ -64,7 +66,8 @@ class PropertyFilterSearchType extends AbstractType
             ->add('heat', ChoiceType::class, [
                 'label' => false,
                 'placeholder' => 'Chauffage',
-                'choices' => $propertyHeat
+                'choices' => $propertyHeat,
+                'required' => false
             ])
             ->add('city', TypeTextType::class, [
                 'required' => false,
@@ -72,6 +75,18 @@ class PropertyFilterSearchType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Ville'
                 ]
+            ])
+            ->add('options', EntityType::class, [
+                'required' => false,
+                'label' => false,
+                'class' => Option::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+                'attr' => [
+                    'class' => 'select2options',
+                    'placeholder' => 'options'
+                ]
+
             ]);
     }
 

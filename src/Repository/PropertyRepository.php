@@ -111,6 +111,13 @@ class PropertyRepository extends ServiceEntityRepository
             $query = $query->andWhere('p.city LIKE :city');
             $query->setParameter('city', '%' . $search->getCity() . '%');
         }
+        if ($search->getOptions()) {
+            foreach ($search->getOptions() as $k => $option) {
+                $query = $query
+                    ->andWhere(":option$k MEMBER OF p.options")
+                    ->setParameter("option$k", $option);
+            }
+        }
 
 
         return $query
