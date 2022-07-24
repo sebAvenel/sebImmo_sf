@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\PropertyRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Query\Expr\Func;
@@ -97,13 +99,20 @@ class Property
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\Regex("/^(([1-95]{2}|2A|2B)[0-9]{3})$|^[971-974]$/")
+     * @Assert\Regex("/^(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}$/")
+
      */
     private $postal_code;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Option::class, inversedBy="properties")
+     */
+    private $options;
 
     public function __construct()
     {
         $this->created_at = new \DateTime();
+        $this->options = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -267,6 +276,30 @@ class Property
     {
         $postalCodeWithoutSpace = str_replace(' ', '', $postal_code);
         $this->postal_code = $postalCodeWithoutSpace;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Option>
+     */
+    public function getOptions(): Collection
+    {
+        return $this->options;
+    }
+
+    public function addOption(Option $option): self
+    {
+        if (!$this->options->contains($option)) {
+            $this->options[] = $option;
+        }
+
+        return $this;
+    }
+
+    public function removeOption(Option $option): self
+    {
+        $this->options->removeElement($option);
 
         return $this;
     }

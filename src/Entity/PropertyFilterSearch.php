@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PropertyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class PropertyFilterSearch
@@ -55,6 +56,16 @@ class PropertyFilterSearch
      * @var string|null
      */
     public $postalCode;
+
+    /**
+     * @var ArrayCollection
+     */
+    public $options;
+
+    public function __construct()
+    {
+        $this->options = new ArrayCollection();
+    }
 
     /**
      * Get the value of minValue
@@ -196,6 +207,24 @@ class PropertyFilterSearch
     public function setCity(string $city): self
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of options
+     */
+    public function getOptions(): ArrayCollection
+    {
+        return $this->options;
+    }
+
+    /**
+     * Set the value of options
+     */
+    public function setOptions(ArrayCollection $options): self
+    {
+        $this->options = $options;
 
         return $this;
     }
