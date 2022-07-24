@@ -22,7 +22,7 @@ class PropertyFixtures extends Fixture
                 ->setCreatedAt($faker->DateTime())
                 ->setDescription($faker->paragraph())
                 ->setHeat($faker->numberBetween(0, count(Property::HEAT) - 1))
-                ->setPostalCode((int) $faker->postcode())
+                ->setPostalCode($faker->postcode())
                 ->setPrice($faker->numberBetween(50000, 500000))
                 ->setRooms($faker->numberBetween(1, 12))
                 ->setSold(false)

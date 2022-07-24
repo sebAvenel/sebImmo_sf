@@ -100,6 +100,7 @@ class Property
     /**
      * @ORM\Column(type="string")
      * @Assert\Regex("/^(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}$/")
+
      */
     private $postal_code;
 
@@ -273,7 +274,8 @@ class Property
 
     public function setPostalCode(string $postal_code): self
     {
-        $this->postal_code = $postal_code;
+        $postalCodeWithoutSpace = str_replace(' ', '', $postal_code);
+        $this->postal_code = $postalCodeWithoutSpace;
 
         return $this;
     }

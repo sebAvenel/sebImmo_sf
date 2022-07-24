@@ -1,3 +1,15 @@
 .badge-danger {
     background-color: red;
 }
+
+.form-control {
+    margin-bottom: 2%;
+}
+
+.card-title {
+    min-height: 40px;
+}
+
+.card-text {
+    min-height: 80px;
+}
