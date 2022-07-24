@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Property;
+use App\Entity\PropertyFilterSearch;
+use App\Form\PropertyFilterSearchType;
 use App\Repository\PropertyRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,7 +27,13 @@ class PropertyController extends AbstractController
      */
     public function index(PaginatorInterface $paginator, Request $request): Response
     {
-        $datas = $this->repository->findBy(['sold' => false]);
+        $search = new PropertyFilterSearch;
+        $form = $this->createForm(PropertyFilterSearchType::class, $search);
+        $form->handleRequest($request);
+        $datas = $this->repository->findBySearch($search);
+        if (empty($datas)) {
+            $this->addFlash('error', 'Aucun bien trouvé');
+        }
         $properties = $paginator->paginate(
             $datas,
             $request->query->getInt('page', 1),
@@ -38,7 +46,8 @@ class PropertyController extends AbstractController
         return $this->render('property/index.html.twig', [
             'controller_name' => 'PropertyController',
             'current_menu' => 'properties',
-            'properties' => $properties
+            'properties' => $properties,
+            'form' => $form->createView()
         ]);
     }
 

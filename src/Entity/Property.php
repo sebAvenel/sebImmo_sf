@@ -96,8 +96,8 @@ class Property
     private $created_at;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\Regex("/^(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}$/")
+     * @ORM\Column(type="string")
+     * @Assert\Regex("/^(([1-95]{2}|2A|2B)[0-9]{3})$|^[971-974]$/")
      */
     private $postal_code;
 
@@ -258,14 +258,15 @@ class Property
         return $this;
     }
 
-    public function getPostalCode(): ?int
+    public function getPostalCode(): ?string
     {
         return $this->postal_code;
     }
 
-    public function setPostalCode(int $postal_code): self
+    public function setPostalCode(string $postal_code): self
     {
-        $this->postal_code = $postal_code;
+        $postalCodeWithoutSpace = str_replace(' ', '', $postal_code);
+        $this->postal_code = $postalCodeWithoutSpace;
 
         return $this;
     }
