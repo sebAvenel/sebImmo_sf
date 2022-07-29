@@ -1,6 +1,11 @@
 <div class="col-3">
 	<div class="card mt-4">
-		<img class="card-img-top" src="http://place-hold.it/350x250" alt="Card image cap">
+		{% if property.imagename %}
+			<img class="card-img-top" src="{{ vich_uploader_asset(property, 'imageFile') }}" alt="Card image top">
+		{% else %}
+			<img class="card-img-top" src="http://place-hold.it/304x171" alt="Card image top">
+		{% endif %}
+
 		<div class="card-body">
 			<h6 class="card-title text-primary">
 				<a href="{{ path('property.show', {id: property.id, slug: property.slug}) }}">{{ property.title }}</a>
