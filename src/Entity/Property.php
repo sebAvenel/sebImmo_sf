@@ -117,13 +117,18 @@ class Property
     private $imageName;
 
     /**
+     * @var File|null
+     * @Assert\Image(
+     *      mimeTypes="image/jpeg"
+     * )
      * @Vich\UploadableField(mapping="property_images", fileNameProperty="imageName")
-     * @var File
      */
     private $imageFile;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * 
+     * @var \DateTimeInterface
      */
     private $updatedAt;
 

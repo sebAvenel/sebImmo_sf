@@ -13,6 +13,7 @@
         "fakerphp/faker": "^1.19",
         "knplabs/knp-components": "^3.4",
         "knplabs/knp-paginator-bundle": "^5.8",
+        "liip/imagine-bundle": "^2.8",
         "phpdocumentor/reflection-docblock": "^5.3",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/apache-pack": "^1.0",

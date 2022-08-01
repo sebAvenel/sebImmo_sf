@@ -18,3 +18,11 @@
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
+
+###> Vichuploader images ###
+/public/images/properties/
+###< Vichuploader images ###
+
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###
