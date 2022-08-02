@@ -1,57 +1,73 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{property.title}}
+	{{property.title}}
 {% endblock %}
 
 {% block body %}
 	<div class="container">
 		<div class="p-5 mb-4 bg-light rounded-3 text-center">
 			<div class="row">
-                <div class="col-md-8">
-                </div>
-                <div class="col-md-4">
-                    <h1>{{ property.title }}</h1>
-                    <h2>{{ property.rooms }} pièces - {{ property.surface}} m²</h2>
-                    <div class="text-primary" style="font-size: 4rem; font-weight: bold;">{{ property.formattedPrice }} €</div>
-                    <a href="#" class="btn btn-primary">Contacter l'agence</a>
-                </div>
-            </div>
+				<div class="col-md-8">
+					{% if property.imagename %}
+						<img src="{{ vich_uploader_asset(property, 'imageFile') | imagine_filter('medium') }}" alt="main iamge">
+					{% else %}
+						<img src="{{ asset('images/maison_pd.jpg') | imagine_filter('medium') }} " alt="main image">
+					{% endif %}
+				</div>
+				<div class="col-md-4">
+					<h1>{{ property.title }}</h1>
+					<h2>{{ property.rooms }}
+						pièces -
+						{{ property.surface}}
+						m²</h2>
+					<div class="text-primary" style="font-size: 4rem; font-weight: bold;">{{ property.formattedPrice }}
+						€</div>
+					<a href="#" class="btn btn-primary">Contacter l'agence</a>
+				</div>
+			</div>
 		</div>
 
-        <p>{{ property.description | nl2br }}
+		<p>{{ property.description | nl2br }}
 
-        <div class="row">
-            <div class="col-md-8">
-                <h2>Caractéristiques</h2>
-                <table class="table table-striped">
-                    <tbody>
-                        <tr>
-                            <td>Surface habitable</td>
-                            <td>{{ property.surface }} m²</td>
-                        </tr>
-                        <tr>
-                            <td>Pièces</td>
-                            <td>{{ property.rooms }}</td>
-                        </tr>
-                        <tr>
-                            <td>Chambres</td>
-                            <td>{{ property.bedrooms }}</td>
-                        </tr>
-                        <tr>
-                            <td>Pièces</td>
-                            <td>{{ property.rooms }}</td>
-                        </tr>
-                        <tr>
-                            <td>Chauffage</td>
-                            <td>{{ property.heatType }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-4">
-            <h2>Spécificités</h2>
-            </div>
-        </div>
+			<div class="row">
+				<div class="col-md-8">
+					<h2>Caractéristiques</h2>
+					<table class="table table-striped">
+						<tbody>
+							<tr>
+								<td>Surface habitable</td>
+								<td>{{ property.surface }}
+									m²</td>
+							</tr>
+							<tr>
+								<td>Pièces</td>
+								<td>{{ property.rooms }}</td>
+							</tr>
+							<tr>
+								<td>Chambres</td>
+								<td>{{ property.bedrooms }}</td>
+							</tr>
+							<tr>
+								<td>Pièces</td>
+								<td>{{ property.rooms }}</td>
+							</tr>
+							<tr>
+								<td>Chauffage</td>
+								<td>{{ property.heatType }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="col-md-4">
+					<h2>Spécificités</h2>
+					<ul class="list-group">
+						{% for option in property.options %}
+							<li class="list-group-item">{{option.name}}</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</p>
 	</div>
 {% endblock %}

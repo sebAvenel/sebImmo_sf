@@ -30,6 +30,7 @@ class PropertyType extends AbstractType
                 'class' => Option::class,
                 'choice_label' => 'name',
                 'multiple' => true,
+                'required' => false,
                 'attr' => ['class' => 'select2options']
 
             ])

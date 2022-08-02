@@ -3,9 +3,8 @@
 		{% if property.imagename %}
 			<img class="card-img-top" src="{{ vich_uploader_asset(property, 'imageFile') | imagine_filter('my_thumb') }}" alt="Card image top">
 		{% else %}
-			<img class="card-img-top" src="http://place-hold.it/300x150" alt="Card image top">
+			<img class="card-img-top" src="{{ asset('images/maison_pd.jpg') | imagine_filter('my_thumb') }} " alt="Card image top">
 		{% endif %}
-
 		<div class="card-body">
 			<h6 class="card-title text-primary">
 				<a href="{{ path('property.show', {id: property.id, slug: property.slug}) }}">{{ property.title }}</a>
