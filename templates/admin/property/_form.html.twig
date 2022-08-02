@@ -8,13 +8,14 @@
 <div class="row mt-4">
 	<div class="col-md-2">{{ form_row(form.surface) }}</div>
 	<div class="col-md-2">{{ form_row(form.heat) }}</div>
-	<div class="col-md-2">{{ form_row(form.rooms) }}</div>
-	<div class="col-md-2">{{ form_row(form.bedrooms) }}</div>
+	<div class="col-md-1">{{ form_row(form.rooms) }}</div>
+	<div class="col-md-1">{{ form_row(form.bedrooms) }}</div>
 	<div class="col-md-2">{{ form_row(form.price) }}</div>
-	<div class="col-md-2">{{ form_row(form.sold) }}</div>
+	<div class="col-md-4">{{ form_row(form.imageFile) }}</div>
 </div>
 <div class="row mt-4">
-	<div class="col-12">{{ form_row(form.description) }}</div>
+	<div class="col-md-9">{{ form_row(form.description) }}</div>
+	<div class="col-md-3">{{ form_row(form.sold) }}</div>
 </div>
 {{form_rest(form)}}
 <button class="btn btn-primary mt-4">{{ button|default('Enregistrer')}}</button>
