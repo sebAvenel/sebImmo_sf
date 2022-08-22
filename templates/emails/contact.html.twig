@@ -1,0 +1,57 @@
+<head>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+{# <pre>
+    {{ dump(datas) }}
+</pre> #}
+
+<div class="container text-center">
+	<h3 class="mb-5 mt-5">Nouveau message de la part de
+		{{ datas.firstname ~ ' ' ~ datas.lastname }}
+	</h3>
+	<div id="message" class="mb-5">
+		{{ datas.message }}
+	</div>
+	<div class="row">
+		<div class="col-6">
+			<img src="cid:main-image" class="card-img-top" alt="image à la une">
+		</div>
+		<div class="col-6">
+			<div class="card text-center">
+				<div class="card-header">
+					<h5>Rappel du bien:</h5>
+				</div>
+				<div class="card-body">
+					<h5 class="card-title">{{ datas.property.title}}</h5>
+					<p class="card-text">{{ datas.property.description | nl2br}}</p>
+					<table class="table text-center">
+						<thead>
+							<tr>
+								<th scope="col">surface</th>
+								<th scope="col">Pièce(s)</th>
+								<th scope="col">Chambre(s)</th>
+								<th scope="col">Chauffage</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>{{ datas.property.surface ~ 'm²' }}</td>
+								<td>{{ datas.property.rooms}}</td>
+								<td>{{ datas.property.bedrooms}}</td>
+								<td>{{ datas.chauffage}}</td>
+							</tr>
+						</tbody>
+					</table>
+					<a href="{{ url('property.show', {id: datas.property.id, slug: datas.property.slug}) }}" class="btn btn-primary" target="_blank">Voir l'annonce</a>
+				</div>
+				<div class="card-footer text-muted">
+					Rappeler Mr/Mme
+					{{ datas.firstname ~ ' ' ~ datas.lastname }}
+					:
+					{{ datas.phoneNumber }}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

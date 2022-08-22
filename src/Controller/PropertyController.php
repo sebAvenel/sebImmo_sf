@@ -7,6 +7,7 @@ use App\Entity\Property;
 use App\Entity\PropertyFilterSearch;
 use App\Form\ContactType;
 use App\Form\PropertyFilterSearchType;
+use App\Notifications\ContactNotification;
 use App\Repository\PropertyRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -57,7 +58,7 @@ class PropertyController extends AbstractController
      * @Route("/biens/{slug}-{id}", name="property.show", requirements={"slug": "[a-z0-9\-]*"})
      * @return Response
      */
-    public function show(Property $property, string $slug, Request $request): Response
+    public function show(Property $property, string $slug, Request $request, ContactNotification $notification): Response
     {
 
         if ($property->getSlug() !== $slug) {
@@ -71,9 +72,10 @@ class PropertyController extends AbstractController
         $contact = new Contact;
         $contact->setProperty($property);
         $form = $this->createForm(ContactType::class, $contact);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'votre messsage a bien été envoyé');
+            $notification->notify($contact);
             return $this->redirectToRoute('property.show', [
                 'id' => $property->getId(),
                 'slug' => $property->getSlug()

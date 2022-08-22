@@ -46,7 +46,6 @@ class Contact
      */
     private $property;
 
-
     /**
      * Get assert\NotBlank
      */
