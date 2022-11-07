@@ -10,3 +10,10 @@ import './styles/app.css';
 
 // start the Stimulus application
 import './bootstrap';
+
+import { Tooltip, Toast, Popover } from 'bootstrap';
+
+var $ = require('jquery');
+
+require('select2')
+$('select').select2()
