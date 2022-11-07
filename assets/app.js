@@ -15,5 +15,21 @@ import { Tooltip, Toast, Popover } from 'bootstrap';
 
 var $ = require('jquery');
 
+// utilisation du plugin 'select2' sur tous les select
 require('select2')
 $('select').select2()
+
+// animation de formulaire de contact sur la vue d'un bien détaillé (show.html.twig)
+let $contactButton = $('#contactButton');
+$contactButton.click(e => {
+    e.preventDefault();
+    $('#contactForm').slideDown();
+    $contactButton.slideUp();
+})
+
+let $cancelButton = $('#cancelButton');
+$cancelButton.click(e => {
+    e.preventDefault();
+    $('#contactForm').slideUp();
+    $contactButton.slideDown();
+})
