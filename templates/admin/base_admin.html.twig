@@ -1,0 +1,60 @@
+<div class="bg-light" style="height:100%;">
+    <div class=" align-items-center align-items-sm-start px-3 pt-4 pb-5 text-white">
+        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+            <li>
+                <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                    <i class="fs-4 bi-bootstrap"></i>
+                    <span class="ms-1 d-none d-sm-inline">Propriétés</span>
+                </a>
+                <ul class="collapse nav flex-column ps-4" id="submenu2" data-bs-parent="#menu">
+                    <li class="w-100">
+                        <a href="{{ path('admin.property.new') }}" class="nav-link px-0">
+                            <span class="d-none d-sm-inline">Ajouter</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin.property.index') }}" class="nav-link px-0">
+                            <span class="d-none d-sm-inline">Editer/supprimer</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                    <i class="fs-4 bi-speedometer2"></i>
+                    <span class="ms-1 d-none d-sm-inline">Options</span>
+                </a>
+                <ul class="collapse nav flex-column ps-4" id="submenu1" data-bs-parent="#menu">
+                    <li class="w-100">
+                        <a href="{{ path('admin.option.new') }}" class="nav-link px-0">
+                            <span class="d-none d-sm-inline">Ajouter</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin.option.index') }}" class="nav-link px-0">
+                            <span class="d-none d-sm-inline">Editer/supprimer</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                    <i class="fs-4 bi-grid"></i>
+                    <span class="ms-1 d-none d-sm-inline">Utilisateurs</span>
+                </a>
+                <ul class="collapse nav flex-column ps-4" id="submenu3" data-bs-parent="#menu">
+                    <li class="w-100">
+                        <a href="#" class="nav-link px-0">
+                            <span class="d-none d-sm-inline">Ajouter</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link px-0">
+                            <span class="d-none d-sm-inline">Modifier/supprimer</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
