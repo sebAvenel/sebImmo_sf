@@ -3,7 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
-use App\Form\UserRegistrationFormType;
+use App\Form\Admin\UserEditDataFormType;
+use App\Form\Admin\UserEditPasswordFormType;
+use App\Form\Admin\UserRegistrationByAdminFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,8 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/admin/user")
@@ -33,19 +33,18 @@ class AdminUserController extends AbstractController
     /**
      * @Route("/new", name="admin.user.new", methods={"GET", "POST"})
      */
-    public function new(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, EntityManagerInterface $entityManager, Security $security): Response
+    public function new(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
-        $getRoles = $security->get
-        $form = $this->createForm(UserRegistrationFormType::class, $user);
+        $form = $this->createForm(UserRegistrationByAdminFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
-            $userPasswordEncoder->encodePassword(
+                $userPasswordEncoder->encodePassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $form->get('password')->getData()
                 )
             );
 
@@ -62,11 +61,11 @@ class AdminUserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="admin.user.edit", methods={"GET", "POST"})
+     * @Route("/{id}/edit-data", name="admin.user.edit.data", methods={"GET", "POST"})
      */
-    public function edit(Request $request, User $user, UserRepository $userRepository): Response
+    public function editData(Request $request, User $user, UserRepository $userRepository): Response
     {
-        $form = $this->createForm(UserRegistrationFormType::class, $user);
+        $form = $this->createForm(UserEditDataFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -74,7 +73,32 @@ class AdminUserController extends AbstractController
             return $this->redirectToRoute('admin.user.index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('admin/user/edit.html.twig', [
+        return $this->render('admin/user/edit_user.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit-password", name="admin.user.edit.password", methods={"GET", "POST"})
+     */
+    public function editPassword(Request $request, User $user, UserPasswordEncoderInterface $userPasswordEncoder, UserRepository $userRepository): Response
+    {
+        $form = $this->createForm(UserEditPasswordFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword(
+                $userPasswordEncoder->encodePassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
+            $userRepository->add($user);
+            return $this->redirectToRoute('admin.user.index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('admin/user/edit_mdp.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
